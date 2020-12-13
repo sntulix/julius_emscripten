@@ -1,3 +1,109 @@
+# About julius
+
+Read https://github.com/julius-speech/julius please.
+
+
+# Build flow libjulius.a
+
+```
+git clone https://github.com/julius-speech/julius.git
+cd julius
+
+# add supoort host
+# update the files that The GNU config.guess and config.sub scripts. 
+# https://git.savannah.gnu.org/cgit/config.git/tree/
+
+cd support
+wget -O config.guess 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD'
+wget -O config.sub 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD'
+
+cd ../jcontrol
+wget -O config.guess 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD'
+wget -O config.sub 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD'
+
+
+cd ..
+
+# add no mictype support
+# modify ./libsent/configure
+
+# ./libsent/configure:5219 checking for default input device type... configure: error: none of alsa/oss/pulseaudio/esd header/lib found!
+
+#         #else
+        #   as_fn_error $? "none of alsa/oss/pulseaudio/esd header/lib found!" "$LINENO" 5
+#
+
+
+# ./libsent/configure:5738 configure: error: mictype not supported, or specified type not exist
+
+# #    *)
+# #       aldesc="no support"
+# #       as_fn_error $? "mictype not supported, or specified type not exist" "$LINENO" 5
+# #       ;;
+
+
+# emconfigure
+
+cd ..
+emconfigure ./configure --enable-words-int
+
+
+
+# result
+****************************************************************
+Julius/Julian libsent library rev.4.6:
+
+- Built on:
+    compiler (CC)            : /home/takahiro/ドキュメント/ソース/emscripten/emcc
+    cflags (CFLAGS)          :  -fPIC 
+    cppflags (CPPFLAGS)      :   -DHAVE_CONFIG_H
+- Audio I/O
+    primary mic device API   : no ()
+    available mic device API :
+    supported audio format   : RAW and WAV only
+    NetAudio support         : no
+- Language Modeling
+    class N-gram support     : yes
+- Libraries
+    file decompression by    : gzip command
+- Process management
+    fork on adinnet input    : no
+- CUDA
+    built-in CUDA support    : no
+
+  Note: compilation time flags are now stored in "libsent-config".
+        If you link this library, add output of
+        "libsent-config --cflags" to CFLAGS, and
+        "libsent-config --libs" to LIBS.
+****************************************************************
+
+
+# modify to pass "'cpuid.h' file not found"
+
+cd libsent
+
+# src/phmm/calc_dnn.c:17:10: fatal error: 'cpuid.h' file not found
+# src/phmm/calc_dnn.c:15
+# #if defined(__arm__) || TARGET_OS_IPHONE || defined(__aarch64__) || defined(__EMSCRIPTEN__)
+
+
+# compile
+
+emmake make
+```
+
+# build test
+
+```
+emcc index.c src/version.o libjulius.a -o index.html -I./include -I../
+libsent/include
+
+# run it.
+
+emrun --no_browser --hostname=jetson.local .
+```
+
+
 Julius: Open-Source Large Vocabulary Continuous Speech Recognition Engine
 ==========================================================================
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2530396.svg)](https://doi.org/10.5281/zenodo.2530396)
