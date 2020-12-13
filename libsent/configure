@@ -5215,8 +5215,8 @@ $as_echo_n "checking for default input device type... " >&6; }
 	   altype=oss
 	elif test "$has_esd" = yes; then
 	   altype=esd
-	else
-	   as_fn_error $? "none of alsa/oss/pulseaudio/esd header/lib found!" "$LINENO" 5
+	#else
+	#   as_fn_error $? "none of alsa/oss/pulseaudio/esd header/lib found!" "$LINENO" 5
 	fi
 	;;
   freebsd*)
@@ -5735,10 +5735,10 @@ fi
 #	AC_DEFINE(USE_MIC)
 #	SOUNDLIB="-L/usr/opt/MME242/lib -lmme")
 #	;;
-    *)
-	aldesc="no support"
-	as_fn_error $? "mictype not supported, or specified type not exist" "$LINENO" 5
-	;;
+#    *)
+#	aldesc="no support"
+#	as_fn_error $? "mictype not supported, or specified type not exist" "$LINENO" 5
+#	;;
 esac
 
 if test "$with_netaudio_dir" = auto ; then
