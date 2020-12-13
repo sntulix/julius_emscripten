@@ -95,12 +95,11 @@ emmake make
 # build test
 
 ```
-emcc index.c src/version.o libjulius.a -o index.html -I./include -I../
-libsent/include
+emcc index.c libjulius/src/version.o libjulius/libjulius.a -o index.html -Ilibjulius/include -Ilibsent/include
 
 # run it.
 
-emrun --no_browser --hostname=jetson.local .
+emrun --no_browser --hostname=<hostname> .
 ```
 
 
