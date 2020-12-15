@@ -100,11 +100,12 @@ emcc index.c ../../libjulius/src/version.o ../../libjulius/libjulius.a -o bin/in
 # run it.
 
 emrun --no_browser --hostname=<hostname> .
+```
 
 # online demo
 
+show version.
 https://sntulix.github.io/julius_emscripten/test/show_version/bin/index.html
-```
 
 
 Julius: Open-Source Large Vocabulary Continuous Speech Recognition Engine
