@@ -40,8 +40,8 @@ static boolean nolog = FALSE;
 static boolean
 opt_help(Jconf *jconf, char *arg[], int argnum)
 {
-  fprintf(stderr, "Julius rev.%s - based on ", JULIUS_VERSION);
-  j_output_argument_help(stderr);
+  fprintf(stdout, "Julius rev.%s - based on ", JULIUS_VERSION);
+  j_output_argument_help(stdout);
   exit(1);			/* terminates here! */
   return TRUE;
 }
@@ -92,10 +92,10 @@ main(int argc, char *argv[])
 
   /* if no option argument, output julius usage and exit */
   if (argc == 1) {
-    fprintf(stderr, "Julius rev.%s - based on ", JULIUS_VERSION);
-    j_put_version(stderr);
-    fprintf(stderr, "Try '-setting' for built-in engine configuration.\n");
-    fprintf(stderr, "Try '-help' for run time options.\n");
+    fprintf(stdout, "Julius rev.%s - based on ", JULIUS_VERSION);
+    j_put_version(stdout);
+    fprintf(stdout, "Try '-setting' for built-in engine configuration.\n");
+    fprintf(stdout, "Try '-help' for run time options.\n");
     return -1;
   }
 
@@ -115,7 +115,7 @@ main(int argc, char *argv[])
   jconf = j_jconf_new();
   // j_config_load_file(jconf, jconffile);
   if (j_config_load_args(jconf, argc, argv) == -1) {
-    fprintf(stderr, "Try `-help' for more information.\n");
+    fprintf(stdout, "Try `-help' for more information.\n");
     return -1;
   }
 
@@ -146,7 +146,7 @@ main(int argc, char *argv[])
   recog->jconf = jconf;
   /* load all files according to the configurations */
   if (j_load_all(recog, jconf) == FALSE) {
-    fprintf(stderr, "ERROR: Error in loading model\n");
+    fprintf(stdout, "ERROR: Error in loading model\n");
     if (logfile) fclose(fp);
     return -1;
   }
@@ -163,7 +163,7 @@ main(int argc, char *argv[])
 
   /* checkout for recognition: build lexicon tree, allocate cache */
   if (j_final_fusion(recog) == FALSE) {
-    fprintf(stderr, "ERROR: Error while setup work area for recognition\n");
+    fprintf(stdout, "ERROR: Error while setup work area for recognition\n");
     j_recog_free(recog);
     if (logfile) fclose(fp);
     return -1;
@@ -189,7 +189,7 @@ main(int argc, char *argv[])
     if (jconf->input.speech_input == SP_MFCFILE || jconf->input.speech_input == SP_RAWFILE || jconf->input.speech_input == SP_OUTPROBFILE) {
       setup_output_file(recog, NULL);
     } else {
-      fprintf(stderr, "Warning: -outfile works only for file input, disabled now\n");
+      fprintf(stdout, "Warning: -outfile works only for file input, disabled now\n");
       outfile_enabled = FALSE;
     }
   }
