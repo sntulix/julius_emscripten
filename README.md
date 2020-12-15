@@ -54,7 +54,7 @@ emconfigure ./configure --enable-words-int
 Julius/Julian libsent library rev.4.6:
 
 - Built on:
-    compiler (CC)            : /home/takahiro/ドキュメント/ソース/emscripten/emcc
+    compiler (CC)            : /home/<USER>/ドキュメント/ソース/emscripten/emcc
     cflags (CFLAGS)          :  -fPIC 
     cppflags (CPPFLAGS)      :   -DHAVE_CONFIG_H
 - Audio I/O
