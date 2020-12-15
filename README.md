@@ -95,11 +95,15 @@ emmake make
 # build test
 
 ```
-emcc index.c libjulius/src/version.o libjulius/libjulius.a -o index.html -Ilibjulius/include -Ilibsent/include
+emcc index.c ../../libjulius/src/version.o ../../libjulius/libjulius.a -o bin/index.html -I../../libjulius/include -I../../libsent/include
 
 # run it.
 
 emrun --no_browser --hostname=<hostname> .
+
+# online demo
+
+https://sntulix.github.io/julius_emscripten/test/show_version/bin/index.html
 ```
 
 
