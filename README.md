@@ -95,7 +95,15 @@ emmake make
 # build test
 
 ```
+cd test
+
+cd test/show_version
 emcc index.c ../../libjulius/src/version.o ../../libjulius/libjulius.a -o bin/index.html -I../../libjulius/include -I../../libsent/include
+
+cd ..
+cd test/english_recoginition
+emmake make
+
 
 # run it.
 
@@ -107,6 +115,8 @@ emrun --no_browser --hostname=<hostname> .
 show version.
 https://sntulix.github.io/julius_emscripten/test/show_version/bin/index.html
 
+run julius commandline
+https://sntulix.github.io/julius_emscripten/test/english_recoginition/bin/index.html
 
 Julius: Open-Source Large Vocabulary Continuous Speech Recognition Engine
 ==========================================================================
