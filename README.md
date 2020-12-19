@@ -104,8 +104,8 @@ emrun --no_browser --hostname=<hostname> .
 
 cd ..
 cd test/english_recoginition
-# run it.
 emmake make
+# run it.
 cd bin
 python3 serve.py
 
