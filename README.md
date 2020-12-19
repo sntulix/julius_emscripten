@@ -110,7 +110,7 @@ emmake make
 emrun --no_browser --hostname=<hostname> .
 ```
 
-# online demo (build with emscripten v1.39.14 and binaryen-version_93 on arm64@jetson.nano)
+# online demo (build with emscripten v1.39.14 and binaryen-version_93 on arm64,jetson.nano)
 
 show julius version.
 https://sntulix.github.io/julius_emscripten/test/show_version/bin/index.html
