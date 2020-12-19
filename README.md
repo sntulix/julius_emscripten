@@ -99,15 +99,17 @@ cd test
 
 cd test/show_version
 emcc index.c ../../libjulius/src/version.o ../../libjulius/libjulius.a -o bin/index.html -I../../libjulius/include -I../../libsent/include
+# run it.
+emrun --no_browser --hostname=<hostname> .
 
 cd ..
 cd test/english_recoginition
-emmake make
-
-
 # run it.
+emmake make
+cd bin
+python3 serve.py
 
-emrun --no_browser --hostname=<hostname> .
+
 ```
 
 # online demo (build with emscripten v1.39.14 and binaryen-version_93 on arm64,jetson.nano)
