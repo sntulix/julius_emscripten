@@ -112,11 +112,11 @@ emrun --no_browser --hostname=<hostname> .
 
 # online demo
 
-show version.
+show julius version.
 https://sntulix.github.io/julius_emscripten/test/show_version/bin/index.html
 
-run julius commandline
-https://sntulix.github.io/julius_emscripten/test/english_recoginition/bin/index.html
+run julius on browser (for english speech)
+https://www.futuregadget.com/file/julius_emscripten-english_recoginition/
 
 Julius: Open-Source Large Vocabulary Continuous Speech Recognition Engine
 ==========================================================================
