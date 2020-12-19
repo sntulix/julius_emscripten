@@ -108,7 +108,7 @@ cd test/english_recoginition
 emmake make
 # run it.
 cd bin
-python3 serve.py
+python3 serve.py # after changing host in file.
 
 
 ```
