@@ -100,6 +100,7 @@ cd test
 cd test/show_version
 emcc index.c ../../libjulius/src/version.o ../../libjulius/libjulius.a -o bin/index.html -I../../libjulius/include -I../../libsent/include
 # run it.
+cd bin
 emrun --no_browser --hostname=<hostname> .
 
 cd ..
