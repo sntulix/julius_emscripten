@@ -50,7 +50,3 @@ void outfile_set_fname(char *input_filename);
 /* record.c */
 void record_add_option();
 void record_setup(Recog *recog, void *data);
-
-
-
-

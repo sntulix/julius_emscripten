@@ -23,6 +23,7 @@
  */
 
 #include "app.h"
+#include <emscripten.h>
 
 extern boolean separate_score_flag;
 
@@ -392,6 +393,7 @@ result_pass1_current(Recog *recog, void *dummy)
 	}
 	
 	fflush(stdout);
+emscripten_sleep(15);
 	/* store maximum written length */
 	if (writelen < len) writelen = len;
 	
@@ -420,391 +422,393 @@ result_pass1_current(Recog *recog, void *dummy)
   }
 
   fflush(stdout);		/* flush */
+emscripten_sleep(15);
 }
 
 
 /** 
- * <JA>
- * 第1パス：終了時に第1パスの結果を出力する（第1パス終了後、第2パスが
- * 始まる前に呼ばれる. 認識に失敗した場合は呼ばれない）. 
- * 
- * @param seq [in] 第1パスの1位候補の単語列
- * @param num [in] 上記の長さ
- * @param score [in] 1位の累積仮説スコア
- * @param LMscore [in] @a score のうち言語スコア
- * @param winfo [in] 単語辞書
- * </JA>
- * <EN>
- * 1st pass: output final result of the 1st pass (will be called just after
- * the 1st pass ends and before the 2nd pass begins, and will not if search
- * failed).
- * 
- * @param seq [in] word sequence of the best hypothesis at the 1st pass.
- * @param num [in] length of @a seq.
- * @param score [in] accumulated hypothesis score of @a seq.
- * @param LMscore [in] language score in @a score.
- * @param winfo [in] word dictionary.
- * </EN>
- */
+* <JA>
+* 第1パス：終了時に第1パスの結果を出力する（第1パス終了後、第2パスが
+* 始まる前に呼ばれる. 認識に失敗した場合は呼ばれない）. 
+* 
+* @param seq [in] 第1パスの1位候補の単語列
+* @param num [in] 上記の長さ
+* @param score [in] 1位の累積仮説スコア
+* @param LMscore [in] @a score のうち言語スコア
+* @param winfo [in] 単語辞書
+* </JA>
+* <EN>
+* 1st pass: output final result of the 1st pass (will be called just after
+* the 1st pass ends and before the 2nd pass begins, and will not if search
+* failed).
+* 
+* @param seq [in] word sequence of the best hypothesis at the 1st pass.
+* @param num [in] length of @a seq.
+* @param score [in] accumulated hypothesis score of @a seq.
+* @param LMscore [in] language score in @a score.
+* @param winfo [in] word dictionary.
+* </EN>
+*/
 static void
 result_pass1(Recog *recog, void *dummy)
 {
-  int i,j;
-  static char buf[MAX_HMMNAME_LEN];
-  WORD_INFO *winfo;
-  WORD_ID *seq;
-  int num;
-  RecogProcess *r;
-  boolean multi;
-  int len;
+int i,j;
+static char buf[MAX_HMMNAME_LEN];
+WORD_INFO *winfo;
+WORD_ID *seq;
+int num;
+RecogProcess *r;
+boolean multi;
+int len;
 
-  if (recog->process_list->next != NULL) multi = TRUE;
-  else multi = FALSE;
+if (recog->process_list->next != NULL) multi = TRUE;
+else multi = FALSE;
 
-  for(r=recog->process_list;r;r=r->next) {
-    if (! r->live) continue;
-    if (r->result.status < 0) continue;	/* search already failed  */
-    if (have_progout && r->config->successive.enabled) continue; /* short pause segmentation */
-    if (r->config->output.progout_flag) printf("\r");
+for(r=recog->process_list;r;r=r->next) {
+if (! r->live) continue;
+if (r->result.status < 0) continue;	/* search already failed  */
+if (have_progout && r->config->successive.enabled) continue; /* short pause segmentation */
+if (r->config->output.progout_flag) printf("\r");
 
-    winfo = r->lm->winfo;
-    seq = r->result.pass1.word;
-    num = r->result.pass1.word_num;
+winfo = r->lm->winfo;
+seq = r->result.pass1.word;
+num = r->result.pass1.word_num;
 
-    /* words */
-    if (multi) printf("[#%d %s]\n", r->config->id, r->config->name);
-    printf("pass1_best:");
-    if (r->config->output.progout_flag) {
-      len = 0;
-      for (i=0;i<num;i++) {
-	len += strlen(winfo->woutput[seq[i]]) + 1;
-	myprintf(" %s",winfo->woutput[seq[i]]);
-      }
-      for(j=len;j<writelen;j++) printf(" ");
-    } else {
-      for (i=0;i<num;i++) {
-	myprintf(" %s",winfo->woutput[seq[i]]);
-      }
-    }
-    printf("\n");
-    
-    if (verbose_flag) {		/* output further info */
-      /* N-gram entries */
-      printf("pass1_best_wordseq:");
-      for (i=0;i<num;i++) {
-	myprintf(" %s",winfo->wname[seq[i]]);
-      }
-      printf("\n");
-      /* phoneme sequence */
-      printf("pass1_best_phonemeseq:");
-      for (i=0;i<num;i++) {
-	for (j=0;j<winfo->wlen[seq[i]];j++) {
-	  center_name(winfo->wseq[seq[i]][j]->name, buf);
-	  myprintf(" %s", buf);
-	}
-	if (i < num-1) printf(" |");
-      }
-      printf("\n");
-      if (debug2_flag) {
-	/* logical HMMs */
-	printf("pass1_best_HMMseq_logical:");
-	for (i=0;i<num;i++) {
-	  for (j=0;j<winfo->wlen[seq[i]];j++) {
-	    myprintf(" %s", winfo->wseq[seq[i]][j]->name);
-	  }
-	  if (i < num-1) printf(" |");
-	}
-	printf("\n");
-      }
-      /* score */
-      printf("pass1_best_score: %f", r->result.pass1.score);
-      if (r->lmtype == LM_PROB) {
-	if (separate_score_flag) {
-	  printf(" (AM: %f  LM: %f)", 
-		 r->result.pass1.score_am,
-		 r->result.pass1.score_lm);
-	}
-      }
-      printf("\n");
-    }
-    //printf("\n");
+/* words */
+if (multi) printf("[#%d %s]\n", r->config->id, r->config->name);
+printf("pass1_best:");
+if (r->config->output.progout_flag) {
+len = 0;
+for (i=0;i<num;i++) {
+len += strlen(winfo->woutput[seq[i]]) + 1;
+myprintf(" %s",winfo->woutput[seq[i]]);
+}
+for(j=len;j<writelen;j++) printf(" ");
+} else {
+for (i=0;i<num;i++) {
+myprintf(" %s",winfo->woutput[seq[i]]);
+}
+}
+printf("\n");
+
+if (verbose_flag) {		/* output further info */
+/* N-gram entries */
+printf("pass1_best_wordseq:");
+for (i=0;i<num;i++) {
+myprintf(" %s",winfo->wname[seq[i]]);
+}
+printf("\n");
+/* phoneme sequence */
+printf("pass1_best_phonemeseq:");
+for (i=0;i<num;i++) {
+for (j=0;j<winfo->wlen[seq[i]];j++) {
+  center_name(winfo->wseq[seq[i]][j]->name, buf);
+  myprintf(" %s", buf);
+}
+if (i < num-1) printf(" |");
+}
+printf("\n");
+if (debug2_flag) {
+/* logical HMMs */
+printf("pass1_best_HMMseq_logical:");
+for (i=0;i<num;i++) {
+  for (j=0;j<winfo->wlen[seq[i]];j++) {
+    myprintf(" %s", winfo->wseq[seq[i]][j]->name);
   }
+  if (i < num-1) printf(" |");
+}
+printf("\n");
+}
+/* score */
+printf("pass1_best_score: %f", r->result.pass1.score);
+if (r->lmtype == LM_PROB) {
+if (separate_score_flag) {
+  printf(" (AM: %f  LM: %f)", 
+	 r->result.pass1.score_am,
+	 r->result.pass1.score_lm);
+}
+}
+printf("\n");
+}
+//printf("\n");
+}
 }
 
 #ifdef WORD_GRAPH
 static void
 result_pass1_graph(Recog *recog, void *dummy)
 {
-  WordGraph *wg;
-  WORD_INFO *winfo;
-  RecogProcess *r;
-  boolean multi;
-  int n;
-  int tw1, tw2, i;
+WordGraph *wg;
+WORD_INFO *winfo;
+RecogProcess *r;
+boolean multi;
+int n;
+int tw1, tw2, i;
 
-  if (recog->process_list->next != NULL) multi = TRUE;
-  else multi = FALSE;
+if (recog->process_list->next != NULL) multi = TRUE;
+else multi = FALSE;
 
-  for(r=recog->process_list;r;r=r->next) {
-    if (! r->live) continue;
-    if (r->result.wg1 == NULL) continue;
-    if (multi) printf("[#%d %s]\n", r->config->id, r->config->name);
-    printf("--- begin wordgraph data pass1 ---\n");
+for(r=recog->process_list;r;r=r->next) {
+if (! r->live) continue;
+if (r->result.wg1 == NULL) continue;
+if (multi) printf("[#%d %s]\n", r->config->id, r->config->name);
+printf("--- begin wordgraph data pass1 ---\n");
 
-    winfo = r->lm->winfo;
-    /* debug: output all graph word info */
-    wordgraph_dump(stdout, r->result.wg1, winfo);
-    for(wg=r->result.wg1;wg;wg=wg->next) {
-      tw1 = (TEXTWIDTH * wg->lefttime) / r->peseqlen;
-      tw2 = (TEXTWIDTH * wg->righttime) / r->peseqlen;
-      printf("%4d:", wg->id);
-      for(i=0;i<tw1;i++) printf(" ");
-      myprintf(" %s\n", winfo->woutput[wg->wid]);
-      printf("%4d:", wg->lefttime);
-      for(i=0;i<tw1;i++) printf(" ");
-      printf("|");
-      for(i=tw1+1;i<tw2;i++) printf("-");
-      printf("|\n");
-    }
-    printf("--- end wordgraph data pass1 ---\n");
+winfo = r->lm->winfo;
+/* debug: output all graph word info */
+wordgraph_dump(stdout, r->result.wg1, winfo);
+for(wg=r->result.wg1;wg;wg=wg->next) {
+tw1 = (TEXTWIDTH * wg->lefttime) / r->peseqlen;
+tw2 = (TEXTWIDTH * wg->righttime) / r->peseqlen;
+printf("%4d:", wg->id);
+for(i=0;i<tw1;i++) printf(" ");
+myprintf(" %s\n", winfo->woutput[wg->wid]);
+printf("%4d:", wg->lefttime);
+for(i=0;i<tw1;i++) printf(" ");
+printf("|");
+for(i=tw1+1;i<tw2;i++) printf("-");
+printf("|\n");
+}
+printf("--- end wordgraph data pass1 ---\n");
 
-  }
+}
 }
 
 #endif
 
 /** 
- * <JA>
- * 第1パス：終了時の出力（第1パスの終了時に必ず呼ばれる）
- * 
- * </JA>
- * <EN>
- * 1st pass: end of output (will be called at the end of the 1st pass).
- * 
- * </EN>
- */
+* <JA>
+* 第1パス：終了時の出力（第1パスの終了時に必ず呼ばれる）
+* 
+* </JA>
+* <EN>
+* 1st pass: end of output (will be called at the end of the 1st pass).
+* 
+* </EN>
+*/
 static void
 status_pass1_end(Recog *recog, void *dummy)
 {
-  if (recog->jconf->decodeopt.segment) { /* short pause segmentation */
-    if (have_progout) return;
-  }
-  /* no op */
-  //printf("\n");
+if (recog->jconf->decodeopt.segment) { /* short pause segmentation */
+if (have_progout) return;
+}
+/* no op */
+//printf("\n");
 }
 
 /**********************************************************************/
 /* 2nd pass output */
 
 /** 
- * <JA>
- * 仮説中の単語情報を出力する
- * 
- * @param hypo [in] 仮説
- * @param winfo [in] 単語辞書
- * </JA>
- * <EN>
- * Output word sequence of a hypothesis.
- * 
- * @param hypo [in] sentence hypothesis
- * @param winfo [in] word dictionary
- * </EN>
- */
+* <JA>
+* 仮説中の単語情報を出力する
+* 
+* @param hypo [in] 仮説
+* @param winfo [in] 単語辞書
+* </JA>
+* <EN>
+* Output word sequence of a hypothesis.
+* 
+* @param hypo [in] sentence hypothesis
+* @param winfo [in] word dictionary
+* </EN>
+*/
 static void
 put_hypo_woutput(WORD_ID *seq, int n, WORD_INFO *winfo)
 {
-  int i;
+int i;
 
-  if (seq != NULL) {
-    for (i=0;i<n;i++) {
-      myprintf(" %s",winfo->woutput[seq[i]]);
-    }
-  }
-  printf("\n");  
+if (seq != NULL) {
+for (i=0;i<n;i++) {
+myprintf(" %s",winfo->woutput[seq[i]]);
+}
+}
+printf("\n");  
 }
 
 /** 
- * <JA>
- * 仮説のN-gram情報（Julianではカテゴリ番号列）を出力する. 
- * 
- * @param hypo [in] 文仮説
- * @param winfo [in] 単語辞書
- * </JA>
- * <EN>
- * Output LM word sequence (N-gram entry/DFA category) of a hypothesis.
- * 
- * @param hypo [in] sentence hypothesis
- * @param winfo [in] word dictionary
- * </EN>
- */
+* <JA>
+* 仮説のN-gram情報（Julianではカテゴリ番号列）を出力する. 
+* 
+* @param hypo [in] 文仮説
+* @param winfo [in] 単語辞書
+* </JA>
+* <EN>
+* Output LM word sequence (N-gram entry/DFA category) of a hypothesis.
+* 
+* @param hypo [in] sentence hypothesis
+* @param winfo [in] word dictionary
+* </EN>
+*/
 static void
 put_hypo_wname(WORD_ID *seq, int n, WORD_INFO *winfo)
 {
-  int i;
+int i;
 
-  if (seq != NULL) {
-    for (i=0;i<n;i++) {
-      myprintf(" %s",winfo->wname[seq[i]]);
-    }
-  }
-  printf("\n");  
+if (seq != NULL) {
+for (i=0;i<n;i++) {
+myprintf(" %s",winfo->wname[seq[i]]);
+}
+}
+printf("\n");  
 }
 
 /** 
- * <JA>
- * 仮説の音素系列を出力する. 
- * 
- * @param hypo [in] 文仮説
- * @param winfo [in] 単語情報
- * </JA>
- * <EN>
- * Output phoneme sequence of a hypothesis.
- * 
- * @param hypo [in] sentence hypothesis
- * @param winfo [in] word dictionary
- * </EN>
- */
+* <JA>
+* 仮説の音素系列を出力する. 
+* 
+* @param hypo [in] 文仮説
+* @param winfo [in] 単語情報
+* </JA>
+* <EN>
+* Output phoneme sequence of a hypothesis.
+* 
+* @param hypo [in] sentence hypothesis
+* @param winfo [in] word dictionary
+* </EN>
+*/
 static void
 put_hypo_phoneme(WORD_ID *seq, int n, WORD_INFO *winfo)
 {
-  int i,j;
-  WORD_ID w;
-  static char buf[MAX_HMMNAME_LEN];
+int i,j;
+WORD_ID w;
+static char buf[MAX_HMMNAME_LEN];
 
-  if (seq != NULL) {
-    for (i=0;i<n;i++) {
-      if (i > 0) printf(" |");
-      w = seq[i];
-      for (j=0;j<winfo->wlen[w];j++) {
-	center_name(winfo->wseq[w][j]->name, buf);
-	myprintf(" %s", buf);
-      }
-    }
-  }
-  printf("\n");  
+if (seq != NULL) {
+for (i=0;i<n;i++) {
+if (i > 0) printf(" |");
+w = seq[i];
+for (j=0;j<winfo->wlen[w];j++) {
+center_name(winfo->wseq[w][j]->name, buf);
+myprintf(" %s", buf);
+}
+}
+}
+printf("\n");  
 }
 #ifdef CONFIDENCE_MEASURE
 /** 
- * <JA>
- * 仮説の単語ごとの信頼度を出力する. 
- * 
- * @param hypo [in] 文仮説
- * </JA>
- * <EN>
- * Output confidence score of words in a sentence hypothesis.
- * 
- * @param hypo 
- * </EN>
- */
+* <JA>
+* 仮説の単語ごとの信頼度を出力する. 
+* 
+* @param hypo [in] 文仮説
+* </JA>
+* <EN>
+* Output confidence score of words in a sentence hypothesis.
+* 
+* @param hypo 
+* </EN>
+*/
 #ifdef CM_MULTIPLE_ALPHA
 static void
 put_hypo_cmscore(NODE *hypo, int id)
 {
-  int i;
-  int j;
-  
-  if (hypo != NULL) {
-    for (i=hypo->seqnum-1;i>=0;i--) {
-      printf(" %5.3f", hypo->cmscore[i][id]);
-    }
-  }
-  printf("\n");  
+int i;
+int j;
+
+if (hypo != NULL) {
+for (i=hypo->seqnum-1;i>=0;i--) {
+printf(" %5.3f", hypo->cmscore[i][id]);
+}
+}
+printf("\n");  
 }
 #else
 static void
 put_hypo_cmscore(LOGPROB *cmscore, int n)
 {
-  int i;
-  
-  if (cmscore != NULL) {
-    for (i=0;i<n;i++) {
-      printf(" %5.3f", cmscore[i]);
-    }
-  }
-  printf("\n");
+int i;
+
+if (cmscore != NULL) {
+for (i=0;i<n;i++) {
+printf(" %5.3f", cmscore[i]);
+}
+}
+printf("\n");
 }
 #endif
 #endif /* CONFIDENCE_MEASURE */
 
 /** 
- * <JA>
- * 第2パス：得られた文仮説候補を1つ出力する. 
- * 
- * @param hypo [in] 得られた文仮説
- * @param rank [in] @a hypo の順位
- * @param winfo [in] 単語辞書
- * </JA>
- * <EN>
- * 2nd pass: output a sentence hypothesis found in the 2nd pass.
- * 
- * @param hypo [in] sentence hypothesis to be output
- * @param rank [in] rank of @a hypo
- * @param winfo [in] word dictionary
- * </EN>
- */
+* <JA>
+* 第2パス：得られた文仮説候補を1つ出力する. 
+* 
+* @param hypo [in] 得られた文仮説
+* @param rank [in] @a hypo の順位
+* @param winfo [in] 単語辞書
+* </JA>
+* <EN>
+* 2nd pass: output a sentence hypothesis found in the 2nd pass.
+* 
+* @param hypo [in] sentence hypothesis to be output
+* @param rank [in] rank of @a hypo
+* @param winfo [in] word dictionary
+* </EN>
+*/
 static void
 //ttyout_pass2(NODE *hypo, int rank, Recog *recog)
 result_pass2(Recog *recog, void *dummy)
 {
-  int i, j;
-  int len;
-  char ec[5] = {0x1b, '[', '1', 'm', 0};
-  WORD_INFO *winfo;
-  WORD_ID *seq;
-  int seqnum;
-  int n, num;
-  Sentence *s;
-  RecogProcess *r;
-  boolean multi;
-  HMM_Logical *p;
-  SentenceAlign *align;
+int i, j;
+int len;
+char ec[5] = {0x1b, '[', '1', 'm', 0};
+WORD_INFO *winfo;
+WORD_ID *seq;
+int seqnum;
+int n, num;
+Sentence *s;
+RecogProcess *r;
+boolean multi;
+HMM_Logical *p;
+SentenceAlign *align;
 
-  if (recog->process_list->next != NULL) multi = TRUE;
-  else multi = FALSE;
+if (recog->process_list->next != NULL) multi = TRUE;
+else multi = FALSE;
 
-  for(r=recog->process_list;r;r=r->next) {
-    if (! r->live) continue;
-    if (multi) printf("[#%d %s]\n", r->config->id, r->config->name);
+for(r=recog->process_list;r;r=r->next) {
+if (! r->live) continue;
+if (multi) printf("[#%d %s]\n", r->config->id, r->config->name);
 
-    if (r->config->successive.enabled) { /* short pause segmentation */
-      if (r->result.status < 0 && r->config->output.progout_flag) {
-	/* search failed */
-	
-	printf("\r");
-	winfo = r->lm->winfo;
+if (r->config->successive.enabled) { /* short pause segmentation */
+if (r->result.status < 0 && r->config->output.progout_flag) {
+/* search failed */
 
-	if (r->result.status == J_RESULT_STATUS_FAIL) {
- 	  /* search fail */
- 	  /* output pass1 result as final */
-	  seq = r->result.pass1.word;
-	  seqnum = r->result.pass1.word_num;
-	  j = 0;
- 	  /* skip output if head word is the same as previous segment */
-	  if (confword[confwordnum-1] == seq[0]) j++;
+printf("\r");
+winfo = r->lm->winfo;
 
-	  /* store 1st pass result as final */
-	  for (i=j;i<seqnum;i++) {
-	    confword[confwordnum++] = seq[i];
-	  }
-	} /* else (rejection), output nothing new */
+if (r->result.status == J_RESULT_STATUS_FAIL) {
+  /* search fail */
+  /* output pass1 result as final */
+  seq = r->result.pass1.word;
+  seqnum = r->result.pass1.word_num;
+  j = 0;
+  /* skip output if head word is the same as previous segment */
+  if (confword[confwordnum-1] == seq[0]) j++;
 
-	len = 0;
-	/* output all confirmed words */
-	for(i=0;i<confwordnum;i++) {
-	  if (len + strlen(winfo->woutput[confword[i]]) > SPTEXTWIDTH) {
-	    for(j=len;j<writelen;j++) printf(" ");
-	    printf("\n");
-	    for(j=i;j<confwordnum;j++) confword[j-i] = confword[j];
-	    confwordnum -= i;
-	    len = 0;
-	    i = 0;
-	    writelen = 0;
-	  }
-	  myprintf("%s", winfo->woutput[confword[i]]);
-	  len += strlen(winfo->woutput[confword[i]]);
-	}
-	for(i=len;i<writelen;i++) printf(" ");
-	fflush(stdout);
+  /* store 1st pass result as final */
+  for (i=j;i<seqnum;i++) {
+    confword[confwordnum++] = seq[i];
+  }
+} /* else (rejection), output nothing new */
+
+len = 0;
+/* output all confirmed words */
+for(i=0;i<confwordnum;i++) {
+  if (len + strlen(winfo->woutput[confword[i]]) > SPTEXTWIDTH) {
+    for(j=len;j<writelen;j++) printf(" ");
+    printf("\n");
+    for(j=i;j<confwordnum;j++) confword[j-i] = confword[j];
+    confwordnum -= i;
+    len = 0;
+    i = 0;
+    writelen = 0;
+  }
+  myprintf("%s", winfo->woutput[confword[i]]);
+  len += strlen(winfo->woutput[confword[i]]);
+}
+for(i=len;i<writelen;i++) printf(" ");
+fflush(stdout);
+emscripten_sleep(15);
 	
 	continue;
       }
@@ -987,6 +991,7 @@ result_pass2(Recog *recog, void *dummy)
   }
 
   fflush(stdout);
+emscripten_sleep(15);
 
 }
 
@@ -1024,6 +1029,7 @@ static void
 status_pass2_end(Recog *recog, void *dummy)
 {
   fflush(stdout);
+emscripten_sleep(15);
 }
 
 /**********************************************************************/

@@ -24,6 +24,7 @@
  */
 
 #include "app.h"
+#include <emscripten.h>
 
 boolean separate_score_flag = FALSE;
 boolean outfile_enabled = FALSE;
@@ -79,7 +80,7 @@ opt_noxmlescape(Jconf *jconf, char *arg[], int argnum)
    
 /**********************************************************************/
 int
-main(int argc, char *argv[])
+start_main(int _argc, char *_argv[])
 {
   FILE *fp;
   Recog *recog;
@@ -91,7 +92,8 @@ main(int argc, char *argv[])
   // FILE *fp = fopen(logfile, "w"); jlog_set_output(fp);
 
   /* if no option argument, output julius usage and exit */
-  if (argc == 1) {
+  if (_argc == 1) {
+
     fprintf(stdout, "Julius rev.%s - based on ", JULIUS_VERSION);
     j_put_version(stdout);
     fprintf(stdout, "Try '-setting' for built-in engine configuration.\n");
@@ -103,6 +105,7 @@ main(int argc, char *argv[])
   record_add_option();
   module_add_option();
   charconv_add_option();
+
   j_add_option("-separatescore", 0, 0, "output AM and LM scores separately", opt_separatescore);
   j_add_option("-noxmlescape", 0, 0, "disable XML escape", opt_noxmlescape);
   j_add_option("-logfile", 1, 1, "output log to file", opt_logfile);
@@ -114,7 +117,7 @@ main(int argc, char *argv[])
   /* create a configuration variables container */
   jconf = j_jconf_new();
   // j_config_load_file(jconf, jconffile);
-  if (j_config_load_args(jconf, argc, argv) == -1) {
+  if (j_config_load_args(jconf, _argc, _argv) == -1) {
     fprintf(stdout, "Try `-help' for more information.\n");
     return -1;
   }
@@ -244,4 +247,30 @@ main(int argc, char *argv[])
 
   if (logfile) fclose(fp);
   return(0);
+}
+
+int file_uploaded(char* file_path) {
+
+	FILE *fp;
+	int _argc = 6;
+	char *_argv[6];
+	char _argv0[] = "julius";
+	char _argv1[] = "-C";
+	char _argv2[] = "julius.jconf";
+	char _argv3[] = "-dnnconf";
+	char _argv4[] = "dnn.jconf";
+	char _argv5[] = "-nolog";
+	_argv[0] = _argv0;
+	_argv[1] = _argv1;
+	_argv[2] = _argv2;
+	_argv[3] = _argv3;
+	_argv[4] = _argv4;
+	_argv[5] = _argv5;
+
+	fp = fopen("test.dbl", "w");
+	fputs(file_path, fp);
+	fflush(fp);
+	fclose(fp);
+
+	start_main(_argc, _argv);
 }

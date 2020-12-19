@@ -16,8 +16,8 @@ SHELL=/bin/sh
 LIBSENT=../../libsent
 LIBJULIUS=../../libjulius
 CC=/home/takahiro/ドキュメント/ソース/emscripten/emcc
-CFLAGS= -s ERROR_ON_UNDEFINED_SYMBOLS=0
-CPPFLAGS=-I. -I$(LIBJULIUS)/include -I$(LIBSENT)/include  `$(LIBSENT)/libsent-config --cflags` `$(LIBJULIUS)/libjulius-config --cflags`
+CFLAGS= -O3 -s ASYNCIFY=1 -s EXIT_RUNTIME=1 -s ALLOW_MEMORY_GROWTH=1 -s WASM_MEM_MAX=2097152000 -s ERROR_ON_UNDEFINED_SYMBOLS=0 -s EXPORT_ALL=1 -s "EXPORTED_FUNCTIONS=['_file_uploaded']" -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall']" -s FORCE_FILESYSTEM=1 --preload-file julius.jconf --preload-file wav_config --preload-file dnn.jconf --preload-file ENVR-v5.3.dct --preload-file ENVR-v5.3.lm --preload-file ENVR-v5.3.am --preload-file ENVR-v5.3.phn --preload-file test.dbl --preload-file ENVR-v5.3.layer2_bias.npy --preload-file ENVR-v5.3.layer2_weight.npy --preload-file ENVR-v5.3.layer3_bias.npy --preload-file ENVR-v5.3.layer3_weight.npy --preload-file ENVR-v5.3.layer4_bias.npy --preload-file ENVR-v5.3.layer4_weight.npy --preload-file ENVR-v5.3.layer5_bias.npy --preload-file ENVR-v5.3.layer5_weight.npy --preload-file ENVR-v5.3.layer6_bias.npy --preload-file ENVR-v5.3.layer6_weight.npy --preload-file ENVR-v5.3.layerout_bias.npy --preload-file ENVR-v5.3.layerout_weight.npy --preload-file ENVR-v5.3.prior --preload-file ENVR-v5.3.norm
+CPPFLAGS= -I. -I$(LIBJULIUS)/include -I$(LIBSENT)/include  `$(LIBSENT)/libsent-config --cflags` `$(LIBJULIUS)/libjulius-config --cflags`
 LDFLAGS= -L$(LIBJULIUS) `$(LIBJULIUS)/libjulius-config --libs` -L$(LIBSENT) `$(LIBSENT)/libsent-config --libs` 
 GTK_CFLAGS=
 GTK_LIBS=
@@ -36,7 +36,7 @@ INSTALL_PROGRAM=${INSTALL}
 
 ############################################################
 
-TARGET = index.html
+TARGET = index.js
 INSTALLTARGET = julius
 
 OBJ = \
