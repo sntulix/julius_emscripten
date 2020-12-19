@@ -3,7 +3,7 @@
 Read https://github.com/julius-speech/julius please.
 
 
-# Build flow libjulius.a
+# Build flow libjulius.a with emscripten
 
 ```
 git clone https://github.com/julius-speech/julius.git
@@ -110,7 +110,7 @@ emmake make
 emrun --no_browser --hostname=<hostname> .
 ```
 
-# online demo
+# online demo (build with emscripten v1.39.14 and binaryen-version_93 on arm64@jetson.nano)
 
 show julius version.
 https://sntulix.github.io/julius_emscripten/test/show_version/bin/index.html
