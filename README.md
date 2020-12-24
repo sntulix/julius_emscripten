@@ -105,6 +105,20 @@ emrun --no_browser --hostname=<hostname> .
 
 cd ..
 cd test/english_recoginition
+wget https://jaist.dl.sourceforge.net/project/juliusmodels/ENVR-v5.4.Dnn.Bin.zip
+unzip -j ENVR-v5.4.Dnn.Bin.zip ENVR-v5.4.Dnn.Bin/*.npy
+unzip -j ENVR-v5.4.Dnn.Bin.zip ENVR-v5.4.Dnn.Bin/*.am
+unzip -j ENVR-v5.4.Dnn.Bin.zip ENVR-v5.4.Dnn.Bin/*.dct
+unzip -j ENVR-v5.4.Dnn.Bin.zip ENVR-v5.4.Dnn.Bin/*.lm
+unzip -j ENVR-v5.4.Dnn.Bin.zip ENVR-v5.4.Dnn.Bin/*.norm
+unzip -j ENVR-v5.4.Dnn.Bin.zip ENVR-v5.4.Dnn.Bin/*.phn
+unzip -j ENVR-v5.4.Dnn.Bin.zip ENVR-v5.4.Dnn.Bin/*.prior
+unzip -j ENVR-v5.4.Dnn.Bin.zip ENVR-v5.4.Dnn.Bin/julius.jconf
+unzip -j ENVR-v5.4.Dnn.Bin.zip ENVR-v5.4.Dnn.Bin/test.dbl
+unzip -j ENVR-v5.4.Dnn.Bin.zip ENVR-v5.4.Dnn.Bin/wav_config
+sed -i -e "s/cmnstatic/cvnstatic/" dnn.jconf
+echo state_prior_log10nize false >> dnn.jconf
+
 emmake make
 # run it.
 cd bin
