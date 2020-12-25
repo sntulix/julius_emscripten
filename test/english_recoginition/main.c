@@ -249,7 +249,7 @@ start_main(int _argc, char *_argv[])
   return(0);
 }
 
-int file_uploaded(char* file_path) {
+int file_uploaded(char* recfile_path, char *julius_jconf, char *dnn_jconf, char *wav_config) {
 
 	FILE *fp;
 	int _argc = 6;
@@ -268,7 +268,22 @@ int file_uploaded(char* file_path) {
 	_argv[5] = _argv5;
 
 	fp = fopen("test.dbl", "w");
-	fputs(file_path, fp);
+	fputs(recfile_path, fp);
+	fflush(fp);
+	fclose(fp);
+
+	fp = fopen("julius.jconf", "w");
+	fputs(julius_jconf, fp);
+	fflush(fp);
+	fclose(fp);
+
+	fp = fopen("dnn.jconf", "w");
+	fputs(dnn_jconf, fp);
+	fflush(fp);
+	fclose(fp);
+
+	fp = fopen("wav_config", "w");
+	fputs(wav_config, fp);
 	fflush(fp);
 	fclose(fp);
 

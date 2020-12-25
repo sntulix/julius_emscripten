@@ -99,6 +99,17 @@
         font-family: 'Lucida Console', Monaco, monospace;
         outline: none;
       }
+
+      #option_panel {
+        display: none;
+      }
+      #option_panel.wrapper {
+        grid-template-columns: 300px 300px 300px;
+      }
+      .conf_area {
+        width: 300px;
+        height: 500px;
+      }
     </style>
   </head>
   <body>
@@ -1306,6 +1317,90 @@
       <input type="file" id="myfile" onchange="load_file()"> 
     </p>
     <p>
+      <button onclick="var option_panel = document.getElementById('option_panel'); (option_panel.style.display == 'grid') ? option_panel.style.display='none' : option_panel.style.display='grid';">詳細設定（クリックでパネルを開閉できます）</button>
+    </p>
+    <div id="option_panel" class="wrapper">
+      <div>julius.jconf</div>
+      <div>dnn.jconf</div>
+      <div>wav_config</div>
+      <p>
+        <textarea id="julius.jconf" class="conf_area">
+-input file
+-filelist test.dbl
+-htkconf wav_config
+-h ENVR-v5.3.am
+-hlist ENVR-v5.3.phn
+-d ENVR-v5.3.lm
+-v ENVR-v5.3.dct
+-b 4000
+-lmp 12 -6
+-lmp2 12 -6
+-walign
+-fallback1pass
+-multipath
+-iwsp
+-norealtime
+-iwcd1 max
+-spmodel sp
+-spsegment
+-gprune none
+-no_ccd
+-sepnum 150
+-b2 360
+-n 40
+-s 2000
+-m 8000
+-lookuprange 5
+-sb 80
+-forcedict
+-cutsilence
+        </textarea>
+      </p>
+      <p>
+        <textarea id="dnn.jconf" class="conf_area">
+feature_type MFCC_E_D_A_Z
+feature_options -htkconf wav_config -cvn -cmnload ENVR-v5.3.norm -cvnstatic
+num_threads 1
+feature_len 48
+context_len 11
+input_nodes 528
+output_nodes 7461
+hidden_nodes 1536
+hidden_layers 5
+W1 ENVR-v5.3.layer2_weight.npy
+W2 ENVR-v5.3.layer3_weight.npy
+W3 ENVR-v5.3.layer4_weight.npy
+W4 ENVR-v5.3.layer5_weight.npy
+W5 ENVR-v5.3.layer6_weight.npy
+B1 ENVR-v5.3.layer2_bias.npy
+B2 ENVR-v5.3.layer3_bias.npy
+B3 ENVR-v5.3.layer4_bias.npy
+B4 ENVR-v5.3.layer5_bias.npy
+B5 ENVR-v5.3.layer6_bias.npy
+output_W ENVR-v5.3.layerout_weight.npy
+output_B ENVR-v5.3.layerout_bias.npy
+state_prior_factor 1.0
+state_prior ENVR-v5.3.prior
+state_prior_log10nize false
+        </textarea>
+      </p>
+      <p>
+        <textarea id="wav_config" class="conf_area">
+SOURCEFORMAT = WAV
+TARGETKIND = MFCC_E_D_A_Z
+TARGETRATE = 100000.0
+SAVECOMPRESSED = T
+SAVEWITHCRC = T
+WINDOWSIZE = 250000.0
+USEHAMMING = T
+PREEMCOEF = 0.97
+NUMCHANS = 26
+CEPLIFTER = 22
+NUMCEPS = 1
+        </textarea>
+      </p>
+    </div>
+      <p>
       サンプル音声ファイルのダウンロード<br/>
       <a href="mozilla.wav"/>mozilla.wav</a>
     </p>
