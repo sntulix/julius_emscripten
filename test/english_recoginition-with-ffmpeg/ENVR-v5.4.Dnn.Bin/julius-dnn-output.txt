@@ -1,0 +1,843 @@
+STAT: include config: julius.jconf
+Stat: para: parsing HTK Config file: wav_config
+Warning: para: "SOURCEFORMAT" ignored (not supported, or irrelevant)
+Warning: para: TARGETKIND skipped (will be determined by AM header)
+Stat: para: TARGETRATE=100000.0
+Warning: para: "SAVECOMPRESSED" ignored (not supported, or irrelevant)
+Warning: para: "SAVEWITHCRC" ignored (not supported, or irrelevant)
+Stat: para: WINDOWSIZE=250000.0
+Stat: para: USEHAMMING=T
+Stat: para: PREEMCOEF=0.97
+Stat: para: NUMCHANS=26
+Stat: para: CEPLIFTER=22
+Warning: para: NUMCEPS skipped (will be determined by AM header)
+Warning: no SOURCERATE found
+Warning: assume source waveform sample rate to 625 (16kHz)
+STAT: parsing option string: "-htkconf wav_config -cvn -cmnload ENVR-v5.3.norm -cmnstatic"
+Stat: para: parsing HTK Config file: wav_config
+Warning: para: "SOURCEFORMAT" ignored (not supported, or irrelevant)
+Warning: para: TARGETKIND skipped (will be determined by AM header)
+Stat: para: TARGETRATE=100000.0
+Warning: para: "SAVECOMPRESSED" ignored (not supported, or irrelevant)
+Warning: para: "SAVEWITHCRC" ignored (not supported, or irrelevant)
+Stat: para: WINDOWSIZE=250000.0
+Stat: para: USEHAMMING=T
+Stat: para: PREEMCOEF=0.97
+Stat: para: NUMCHANS=26
+Stat: para: CEPLIFTER=22
+Warning: para: NUMCEPS skipped (will be determined by AM header)
+Warning: no SOURCERATE found
+Warning: assume source waveform sample rate to 625 (16kHz)
+STAT: jconf successfully finalized
+STAT: *** loading AM00 _default
+Stat: init_phmm: Reading in HMM definition
+Stat: binhmm-header: variance inversed
+Stat: read_binhmm: has inversed variances
+Stat: read_binhmm: binary format HMM definition
+Stat: check_hmm_restriction: an HMM with several arcs from initial state found: "sp"
+Stat: read_binhmm: this HMM requires multipath handling at decoding
+Stat: init_phmm: defined HMMs: 15619
+Stat: init_phmm: loading binary hmmlist
+Stat: load_hmmlist_bin: reading hmmlist
+Stat: aptree_read: 64681 nodes (32340 branch + 32341 data)
+Stat: load_hmmlist_bin: reading pseudo phone set
+Stat: aptree_read: 7835 nodes (3917 branch + 3918 data)
+Stat: init_phmm: logical names: 32341 in HMMList
+Stat: init_phmm: base phones:    46 used in logical
+Stat: init_phmm: finished reading HMM definitions
+STAT: m_fusion: force multipath HMM handling by user request
+STAT: pseudo phones are loaded from binary hmmlist file
+Stat: hmm_lookup: 0 pseudo phones are added to logical HMM list
+Stat: dnn_init: use 1 threads for DNN computation (max 8 cores)
+Stat: dnn_init: input: vec 48 * context 11 = 528 dim
+Stat: dnn_init: input layer: 528 dim
+Stat: dnn_init: 5 hidden layer(s): 1536 dim
+Stat: dnn_init: output layer: 7461 dim
+Stat: dnn_layer_load: loaded ENVR-v5.3.layer2_weight.npy
+Stat: dnn_layer_load: loaded ENVR-v5.3.layer2_bias.npy
+Stat: dnn_layer_load: loaded ENVR-v5.3.layer3_weight.npy
+Stat: dnn_layer_load: loaded ENVR-v5.3.layer3_bias.npy
+Stat: dnn_layer_load: loaded ENVR-v5.3.layer4_weight.npy
+Stat: dnn_layer_load: loaded ENVR-v5.3.layer4_bias.npy
+Stat: dnn_layer_load: loaded ENVR-v5.3.layer5_weight.npy
+Stat: dnn_layer_load: loaded ENVR-v5.3.layer5_bias.npy
+Stat: dnn_layer_load: loaded ENVR-v5.3.layer6_weight.npy
+Stat: dnn_layer_load: loaded ENVR-v5.3.layer6_bias.npy
+Stat: dnn_layer_load: loaded ENVR-v5.3.layerout_weight.npy
+Stat: dnn_layer_load: loaded ENVR-v5.3.layerout_bias.npy
+Stat: dnn_init: state prior loaded: ENVR-v5.3.prior
+Stat: calc_dnn: FMA instructions built-in
+Stat: calc_dnn: AVX instructions built-in
+Stat: calc_dnn: SSE instructions built-in
+Stat: clac_dnn: use FMA SIMD instruction (256bit)
+STAT: *** AM00 _default loaded
+STAT: *** loading LM00 _default
+Stat: init_voca: read 319354 words
+Stat: init_ngram: reading in binary n-gram from ENVR-v5.3.lm
+Stat: ngram_read_bin: file version: 5
+Stat: ngram_read_bin_v5: this is backward 3-gram file
+stat: ngram_read_bin_v5: reading 1-gram
+stat: ngram_read_bin_v5: reading 2-gram
+stat: ngram_read_bin_v5: reading 3-gram
+Stat: ngram_read_bin_v5: reading additional LR 2-gram
+Stat: ngram_read_bin: making entry name index
+Stat: init_ngram: found unknown word entry "<unk>"
+Stat: init_ngram: finished reading n-gram
+Stat: init_ngram: mapping dictonary words to n-gram entries
+Stat: init_ngram: finished word-to-ngram mapping
+STAT: *** LM00 _default loaded
+STAT: ------
+STAT: All models are ready, go for final fusion
+STAT: [1] create MFCC extraction instance(s)
+STAT: *** create MFCC calculation modules from AM
+STAT: AM 0 _default: create a new module MFCC01
+STAT: 1 MFCC modules created
+STAT: [2] create recognition processing instance(s) with AM and LM
+STAT: composing recognizer instance SR00 _default (AM00 _default, LM00 _default)
+STAT: Building HMM lexicon tree
+STAT: lexicon size: 3290483 nodes
+STAT: coordination check passed
+STAT: make successor lists for unigram factoring
+STAT: done
+STAT:  1-gram factoring values has been pre-computed
+STAT: SR00 _default composed
+STAT: [3] initialize for acoustic HMM calculation
+Stat: outprob_init: state-level mixture PDFs, use calc_mix()
+Stat: addlog: generating addlog table (size = 1953 kB)
+Stat: addlog: addlog table generated
+STAT: [4] prepare MFCC storage(s)
+Stat: wav2mfcc-pipe: reading initial cepstral mean/variance from file "ENVR-v5.3.norm"
+Stat: wav2mfcc-pipe: reading HTK-format cepstral vectors
+Stat: wav2mfcc-pipe: finished reading CMN/CVN parameter
+STAT: All init successfully done
+
+STAT: ###### initialize input device
+----------------------- System Information begin ---------------------
+JuliusLib rev.4.4.2.1 (fast)
+
+Engine specification:
+ -  Base setup   : fast
+ -  Supported LM : DFA, N-gram, Word
+ -  Extension    : WordsInt NoPThread NoMBR
+ -  Compiled by  : msvc
+Library configuration: version 4.4.2.1
+ - Audio input
+    primary A/D-in driver   : pa-dsound (PortAudio library (DirectSound))
+    available drivers       :
+    wavefile formats        : WAV and RAW
+    max. length of an input : 320000 samples, 450 words
+ - Language Model
+    class N-gram support    : yes
+    MBR weight support      : no
+    word id unit            : integer (4 bytes)
+ - Acoustic Model
+    multi-path treatment    : autodetect
+ - External library
+    file decompression by   : zlib
+ - Process hangling
+    fork on adinnet input   : no
+ - built-in SIMD instruction set for DNN
+    SSE AVX FMA
+    FMA is available maximum on this cpu, use it
+
+
+------------------------------------------------------------
+Configuration of Modules
+
+ Number of defined modules: AM=1, LM=1, SR=1
+
+ Acoustic Model (with input parameter spec.):
+ - AM00 "_default"
+	hmmfilename=ENVR-v5.3.am
+	hmmmapfilename=ENVR-v5.3.phn
+
+ Language Model:
+ - LM00 "_default"
+	vocabulary filename=ENVR-v5.3.dct
+	n-gram  filename=ENVR-v5.3.lm (binary format)
+
+ Recognizer:
+ - SR00 "_default" (AM00, LM00)
+
+------------------------------------------------------------
+Speech Analysis Module(s)
+
+[MFCC01]  for [AM00 _default]
+
+ Acoustic analysis condition:
+	       parameter = MFCC_E_D_A_Z (48 dim. from 15 cepstrum + energy with CMN)
+	sample frequency = 16000 Hz
+	   sample period =  625  (1 = 100ns)
+	     window size =  400 samples (25.0 ms)
+	     frame shift =  160 samples (10.0 ms)
+	    pre-emphasis = 0.97
+	    # filterbank = 26
+	   cepst. lifter = 22
+	      raw energy = True
+	energy normalize = True (scale = 0.1, silence floor = 50.0 dB)
+	    delta window = 2 frames (20.0 ms) around
+	      acc window = 2 frames (20.0 ms) around
+	     hi freq cut = OFF
+	     lo freq cut = OFF
+	 zero mean frame = OFF
+	       use power = OFF
+	             CVN = ON
+	            VTLN = OFF
+
+    spectral subtraction = off
+
+ cep. mean normalization = yes, with a static mean
+   static mean from file = ENVR-v5.3.norm
+ cep. var. normalization = yes, with a static variance
+static variance from file = ENVR-v5.3.norm
+
+	 base setup from = HTK Config (and HTK defaults)
+	  frame splicing = 11
+
+
+------------------------------------------------------------
+Acoustic Model(s)
+
+[AM00 "_default"]
+
+ HMM Info:
+    15619 models, 7461 states, 7461 mpdfs, 119424 Gaussians are defined
+	      model type = context dependency handling ON
+      training parameter = MFCC_E_D_A_Z
+	   vector length = 48
+	number of stream = 1
+	     stream info = [0-47]
+	cov. matrix type = DIAGC
+	   duration type = NULLD
+	max mixture size = 32 Gaussians
+     max length of model = 5 states
+     logical base phones = 46
+       model skip trans. = exist, require multi-path handling
+      skippable models = sp (1 model(s))
+
+ AM Parameters:
+        Gaussian pruning = none (full computation)  (-gprune)
+    short pause HMM name = "sp" specified, "sp" applied (physical)  (-sp)
+  cross-word CD on pass1 = handle by approx. (use max. prob. of same LC)
+   sp transition penalty = -1.0
+
+ DNN parameters:
+          DNN input dim. = 48 (1 x 1)
+         DNN output dim. = 528
+      # of hidden layers = 3087368
+       hidden layer dim. = 11
+      state prior factor = 0.000000
+              batch size = 7461
+       number of threads = 1065353216
+
+------------------------------------------------------------
+Language Model(s)
+
+[LM00 "_default"] type=n-gram
+
+ N-gram info:
+	            spec = 3-gram, backward (right-to-left)
+	        OOV word = <unk>(id=0)
+	    wordset size = 262145
+	  1-gram entries =     262145  (  2.0 MB)
+	  2-gram entries =   16380163  (213.2 MB) (63% are valid contexts)
+	  3-gram entries =   51815890  (474.1 MB)
+	LR 2-gram entries=   16380163  ( 63.5 MB)
+	           pass1 = given additional forward 2-gram
+
+ Vocabulary Info:
+        vocabulary size  = 319354 words, 2161689 models
+        average word len = 6.8 models, 20.3 states
+       maximum state num = 90 nodes per word
+       transparent words = not exist
+       words under class = not exist
+
+ Parameters:
+	(-silhead)head sil word = 1: "<s> @0.000000 [<s>] sil(sil)"
+	(-siltail)tail sil word = 0: "</s> @0.000000 [</s>] sil(sil)"
+
+------------------------------------------------------------
+Recognizer(s)
+
+[SR00 "_default"]  AM00 "_default"  +  LM00 "_default"
+
+ Lexicon tree:
+	 total node num = 3290483
+	  root node num =   1437
+	(149 hi-freq. words are separated from tree lexicon)
+	  leaf node num = 319354
+	 fact. node num = 319354
+
+ Inter-word N-gram cache: 
+	root node to be cached = 263 / 1437 (isolated only)
+	word ends to be cached = 262145 (all)
+	  max. allocation size = 275MB
+	(-lmp)  pass1 LM weight = 12.0  ins. penalty = -6.0
+	(-lmp2) pass2 LM weight = 12.0  ins. penalty = -6.0
+	(-transp)trans. penalty = +0.0 per word
+	(-cmalpha)CM alpha coef = 0.050000
+
+	 inter-word short pause = on (append "sp" for each word tail)
+	  sp transition penalty = -1.0
+ Search parameters: 
+	    multi-path handling = yes, multi-path mode enabled
+	(-b) trellis beam width = 4000
+	(-bs)score pruning thres= disabled
+	(-n)search candidate num= 40
+	(-s)  search stack size = 2000
+	(-m)    search overflow = after 8000 hypothesis poped
+	        2nd pass method = searching sentence, generating N-best
+	(-b2)  pass2 beam width = 360
+	(-lookuprange)lookup range= 5  (tm-5 <= t <tm+5)
+	(-sb)2nd scan beamthres = 80.0 (in logscore)
+	(-n)        search till = 40 candidates found
+	(-output)    and output = 1 candidates out of above
+	 factoring score: 1-gram prob. (statically assigned beforehand)
+	 output word alignments
+	short pause segmentation = on
+	      sp duration length = 10 frames
+	fall back on search fail = on, adopt 1st pass result as final
+
+------------------------------------------------------------
+Decoding algorithm:
+
+	1st pass input processing = (forced) buffered, batch
+	1st pass method = 1-best approx. generating indexed trellis
+	output word confidence measure based on search-time scores
+
+------------------------------------------------------------
+FrontEnd:
+
+ Input stream:
+	             input type = waveform
+	           input source = waveform file
+	          input filelist = test.dbl
+	          sampling freq. = 16000 Hz required
+	         threaded A/D-in = not supported (live input may be dropped)
+	   zero frames stripping = on
+	         silence cutting = on
+	             level thres = 2000 / 32767
+	         zerocross thres = 60 / sec.
+	             head margin = 300 msec.
+	             tail margin = 400 msec.
+	              chunk size = 1000 samples
+	    long-term DC removal = off
+	    level scaling factor = 1.00 (disabled)
+	      reject short input = off
+	      reject  long input = off
+
+----------------------- System Information end -----------------------
+
+Notice for feature extraction (01),
+	*************************************************************
+	* Cepstral mean and variance norm. for batch decoding:      *
+	* constant mean and variance was loaded from file.          *
+	* they will be applied constantly for all input.            *
+	*************************************************************
+
+------
+### read waveform input
+Stat: adin_file: input speechfile: mozilla.wav
+Warning: strip: sample 212-232 has zero value, stripped
+Warning: strip: sample 312-327 has zero value, stripped
+Warning: strip: sample 391-406 has zero value, stripped
+Warning: strip: sample 914-930 has zero value, stripped
+Warning: strip: sample 51221-51244 has zero value, stripped
+Warning: strip: sample 112765-112783 has zero value, stripped
+Warning: strip: sample 113264-113279 has zero value, stripped
+Warning: strip: sample 113394-113409 has zero value, stripped
+Warning: strip: sample 113701-113719 has zero value, stripped
+Warning: strip: sample 114939-114959 has zero value, stripped
+Warning: strip: sample 115667-115682 has zero value, stripped
+Warning: strip: sample 115932-115948 has zero value, stripped
+Warning: strip: sample 116475-116490 has zero value, stripped
+Warning: strip: sample 116605-116623 has zero value, stripped
+Warning: strip: sample 117040-117055 has zero value, stripped
+Warning: strip: sample 117490-117507 has zero value, stripped
+Warning: strip: sample 868-884 has zero value, stripped
+STAT: 50800 samples (3.17 sec.)
+STAT: 50800 samples (3.17 sec.), seconds elapsed from begining of segment = 0.47, current segment base = 46
+STAT: ### speech analysis (waveform -> MFCC)
+### Recognition: 1st pass (LR beam)
+pass1_best: <s> without the data said the article was useless </s>
+pass1_best_wordseq: <s> without the data said the article was useless </s>
+pass1_best_phonemeseq: sil | w ih dh aw t | dh ax | d ae t ah | s eh d | dh iy | aa r t ah k ah l | w ax z | y uw s l ah s | sil
+pass1_best_score: 282.374390
+### Recognition: 2nd pass (RL heuristic best-first)
+STAT: 00 _default: 42566 generated, 7034 pushed, 454 nodes popped in 306
+ALIGN: === word alignment begin ===
+sentence1: <s> without the data said the article was useless </s>
+wseq1: <s> without the data said the article was useless </s>
+phseq1: sil | w ih dh aw t | dh ax | d ae t ah | s eh d | dh iy | aa r t ah k ah l | w ax z | y uw s l ah s | sil
+cmscore1: 0.785 0.892 0.318 0.284 0.669 0.701 0.818 0.103 0.528 1.000
+score1: 261.947144
+=== begin forced alignment ===
+-- word alignment --
+ id: from      to     confidence        unit
+ ----------------------------------------
+[      46       46]  0.784604  <s>	[<s>]
+[      47       80]  0.892168  without	[without]
+[      81       91]  0.317714  the	[the]
+[      92      120]  0.284257  data	[data]
+[     121      158]  0.668551  said	[said]
+[     159      167]  0.701496  the	[the]
+[     168      202]  0.818234  article	[article]
+[     203      223]  0.102517  was	[was]
+[     224      293]  0.528288  useless	[useless]
+[     294      334]  1.000000  </s>	[</s>]
+current base = 46re-computed AM score: 593.854553
+=== end forced alignment ===
+
+STAT: 24800 samples (1.55 sec.)
+STAT: 24800 samples (1.55 sec.), seconds elapsed from begining of segment = 3.84, current segment base = 384
+STAT: ### speech analysis (waveform -> MFCC)
+### Recognition: 1st pass (LR beam)
+pass1_best: <s> i've got go to him
+pass1_best_wordseq: <s> i've got go to him
+pass1_best_phonemeseq: sil | ah ih b | g aa t | g ow | t ah | hh ih m
+pass1_best_score: 120.275803
+### Recognition: 2nd pass (RL heuristic best-first)
+STAT: 00 _default: 23074 generated, 5127 pushed, 354 nodes popped in 143
+ALIGN: === word alignment begin ===
+sentence1: <s> i've got to go to him </s>
+wseq1: <s> i've got to go to him </s>
+phseq1: sil | ah ih b | g aa t | t ah | g ow | t ah | hh ih m | sil
+cmscore1: 0.898 0.703 0.799 0.438 0.883 0.286 0.831 1.000
+score1: 97.710892
+=== begin forced alignment ===
+-- word alignment --
+ id: from      to     confidence        unit
+ ----------------------------------------
+[     384      384]  0.897817  <s>	[<s>]
+[     385      405]  0.702700  i've	[i've]
+[     406      420]  0.799207  got	[got]
+[     421      428]  0.438363  to	[to]
+[     429      448]  0.883145  go	[go]
+[     449      461]  0.286128  to	[to]
+[     462      513]  0.831200  him	[him]
+[     514      515]  1.000000  </s>	[</s>]
+current base = 384re-computed AM score: 291.697052
+=== end forced alignment ===
+
+STAT: 22800 samples (1.42 sec.)
+STAT: 22800 samples (1.42 sec.), seconds elapsed from begining of segment = 5.84, current segment base = 584
+STAT: ### speech analysis (waveform -> MFCC)
+### Recognition: 1st pass (LR beam)
+pass1_best: <s> andy no
+pass1_best_wordseq: <s> andy no
+pass1_best_phonemeseq: sil | ae n d iy | n ow
+pass1_best_score: 50.805225
+### Recognition: 2nd pass (RL heuristic best-first)
+STAT: 00 _default: 19985 generated, 4489 pushed, 274 nodes popped in 131
+ALIGN: === word alignment begin ===
+sentence1: <s> and you know it </s>
+wseq1: <s> and you know it </s>
+phseq1: sil | ae n d | y ax | n ow | ih t | sil
+cmscore1: 0.901 0.859 0.506 0.932 0.043 1.000
+score1: 62.831650
+=== begin forced alignment ===
+-- word alignment --
+ id: from      to     confidence        unit
+ ----------------------------------------
+[     584      584]  0.901367  <s>	[<s>]
+[     585      607]  0.859286  and	[and]
+[     608      624]  0.506341  you	[you]
+[     625      655]  0.932133  know	[know]
+[     656      690]  0.043046  it	[it]
+[     691      705]  1.000000  </s>	[</s>]
+current base = 584re-computed AM score: 204.147247
+=== end forced alignment ===
+
+Warning: strip: sample 731-750 has zero value, stripped
+Warning: strip: sample 931-947 has zero value, stripped
+Warning: strip: sample 61-77 has zero value, stripped
+Warning: strip: sample 342-357 has zero value, stripped
+STAT: 47800 samples (2.99 sec.)
+STAT: 47800 samples (2.99 sec.), seconds elapsed from begining of segment = 8.54, current segment base = 853
+STAT: ### speech analysis (waveform -> MFCC)
+### Recognition: 1st pass (LR beam)
+STAT: current segment end=112
+STAT: segmented: next decoding will restart from 112
+STAT: MFCC01: segmented: processed length=127
+pass1_best: <s> down below </s>
+pass1_best_wordseq: <s> down below </s>
+pass1_best_phonemeseq: sil | d aw n | b ih l ow | sil
+pass1_best_score: 125.068420
+### Recognition: 2nd pass (RL heuristic best-first)
+WARNING: 00 _default: hypothesis stack exhausted, terminate search now
+STAT: 00 _default: 30 sentences have been found
+STAT: 00 _default: 23057 generated, 5085 pushed, 1005 nodes popped in 127
+ALIGN: === word alignment begin ===
+sentence1: <s> down below </s>
+wseq1: <s> down below </s>
+phseq1: sil | d aw n | b ih l ow | sil
+cmscore1: 0.914 0.969 0.860 1.000
+score1: 127.873985
+=== begin forced alignment ===
+-- word alignment --
+ id: from      to     confidence        unit
+ ----------------------------------------
+[     853      853]  0.913925  <s>	[<s>]
+[     854      893]  0.968652  down	[down]
+[     894      947]  0.859841  below	[below]
+[     948      977]  1.000000  </s>	[</s>]
+current base = 965re-computed AM score: 249.947617
+=== end forced alignment ===
+
+STAT: <<<restart the rest>>>
+
+### Recognition: 1st pass (LR beam)
+pass1_best: <s> and darkness were hundreds
+pass1_best_wordseq: <s> and darkness were hundreds
+pass1_best_phonemeseq: sil | ae n d | d aa k n ax s | w er | hh ah n d er d z
+pass1_best_score: 263.657684
+### Recognition: 2nd pass (RL heuristic best-first)
+STAT: 00 _default: 23421 generated, 4310 pushed, 354 nodes popped in 175
+ALIGN: === word alignment begin ===
+sentence1: <s> and darkness were hundreds </s>
+wseq1: <s> and darkness were hundreds </s>
+phseq1: sil | ae n d | d aa k n ax s | w er | hh ah n d er d z | sil
+cmscore1: 0.857 0.517 0.966 0.535 0.849 1.000
+score1: 202.466034
+=== begin forced alignment ===
+-- word alignment --
+ id: from      to     confidence        unit
+ ----------------------------------------
+[     965      965]  0.857186  <s>	[<s>]
+[     966      992]  0.516732  and	[and]
+[     993     1056]  0.965898  darkness	[darkness]
+[    1057     1075]  0.535156  were	[were]
+[    1076     1131]  0.848540  hundreds	[hundreds]
+[    1132     1133]  1.000000  </s>	[</s>]
+current base = 965re-computed AM score: 440.291656
+=== end forced alignment ===
+
+Warning: strip: sample 288-304 has zero value, stripped
+Warning: strip: sample 159-175 has zero value, stripped
+Warning: strip: sample 735-750 has zero value, stripped
+Warning: strip: sample 690-708 has zero value, stripped
+STAT: 78800 samples (4.93 sec.)
+STAT: 78800 samples (4.93 sec.), seconds elapsed from begining of segment = 15.67, current segment base = 1566
+STAT: ### speech analysis (waveform -> MFCC)
+### Recognition: 1st pass (LR beam)
+pass1_best: <s> holder knows to keep smells from disabling your motor functions </s>
+pass1_best_wordseq: <s> holder knows to keep smells from disabling your motor functions </s>
+pass1_best_phonemeseq: sil | hh ow l d ax | n ow z | t ih | k iy p | s m eh l z | f r ah m | d ih s ey b ah l ih ng | y ao | m ow t ax | f ah ng k sh ah n z | sil
+pass1_best_score: 685.859863
+### Recognition: 2nd pass (RL heuristic best-first)
+STAT: 00 _default: 17411 generated, 5129 pushed, 293 nodes popped in 481
+ALIGN: === word alignment begin ===
+sentence1: <s> hold your nose to keep the smell from disabling your motor functions </s>
+wseq1: <s> hold your nose to keep the smell from disabling your motor functions </s>
+phseq1: sil | hh ow l d | y ao r | n ow z | t ih | k iy p | dh ah | s m eh l | f r ah m | d ih s ey b ah l ih ng | y ao | m ow t ax | f ah ng k sh ah n z | sil
+cmscore1: 0.782 0.981 0.222 0.308 0.558 0.957 0.512 0.265 0.442 0.631 0.515 0.415 0.768 1.000
+score1: 688.306519
+=== begin forced alignment ===
+-- word alignment --
+ id: from      to     confidence        unit
+ ----------------------------------------
+[    1566     1566]  0.781604  <s>	[<s>]
+[    1567     1606]  0.981202  hold	[hold]
+[    1607     1628]  0.222137  your	[your]
+[    1629     1676]  0.307715  nose	[nose]
+[    1677     1686]  0.558222  to	[to]
+[    1687     1718]  0.957279  keep	[keep]
+[    1719     1727]  0.512367  the	[the]
+[    1728     1782]  0.265376  smell	[smell]
+[    1783     1808]  0.441801  from	[from]
+[    1809     1880]  0.631308  disabling	[disabling]
+[    1881     1897]  0.514597  your	[your]
+[    1898     1923]  0.415204  motor	[motor]
+[    1924     2011]  0.767653  functions	[functions]
+[    2012     2038]  1.000000  </s>	[</s>]
+current base = 1566re-computed AM score: 1221.677368
+=== end forced alignment ===
+
+Warning: strip: sample 171-190 has zero value, stripped
+Warning: strip: sample 660-678 has zero value, stripped
+STAT: 60800 samples (3.80 sec.)
+STAT: 60800 samples (3.80 sec.), seconds elapsed from begining of segment = 21.11, current segment base = 2110
+STAT: ### speech analysis (waveform -> MFCC)
+### Recognition: 1st pass (LR beam)
+pass1_best: <s> down below the darkness were hundreds of people sleeping in the
+pass1_best_wordseq: <s> down below the darkness were hundreds of people sleeping in the
+pass1_best_phonemeseq: sil | d aw n | b ih l ow | dh ah | d aa k n ax s | w er | hh ah n d er d z | aa v | p iy p ah l | s l iy p ih ng | ih n | dh iy
+pass1_best_score: 436.258209
+### Recognition: 2nd pass (RL heuristic best-first)
+STAT: 00 _default: 38650 generated, 7039 pushed, 500 nodes popped in 368
+ALIGN: === word alignment begin ===
+sentence1: <s> down below in the darkness where hundreds of people sleeping in the </s>
+wseq1: <s> down below in the darkness where hundreds of people sleeping in the </s>
+phseq1: sil | d aw n | b ih l ow | ih n | dh ah | d aa k n ax s | hh w eh r | hh ah n d er d z | aa v | p iy p ah l | s l iy p ih ng | ih n | dh iy | sil
+cmscore1: 0.684 0.994 0.602 0.803 0.025 0.760 0.204 0.751 0.727 0.616 0.870 0.757 0.039 1.000
+score1: 406.043427
+=== begin forced alignment ===
+-- word alignment --
+ id: from      to     confidence        unit
+ ----------------------------------------
+[    2110     2110]  0.684140  <s>	[<s>]
+[    2111     2147]  0.993853  down	[down]
+[    2148     2186]  0.602219  below	[below]
+[    2187     2196]  0.803121  in	[in]
+[    2197     2204]  0.024898  the	[the]
+[    2205     2261]  0.760193  darkness	[darkness]
+[    2262     2283]  0.203763  where	[where]
+[    2284     2335]  0.750828  hundreds	[hundreds]
+[    2336     2348]  0.727415  of	[of]
+[    2349     2380]  0.616418  people	[people]
+[    2381     2430]  0.870017  sleeping	[sleeping]
+[    2431     2449]  0.757138  in	[in]
+[    2450     2463]  0.039482  the	[the]
+[    2464     2465]  1.000000  </s>	[</s>]
+current base = 2110re-computed AM score: 837.182007
+=== end forced alignment ===
+
+STAT: 12800 samples (0.80 sec.)
+STAT: 12800 samples (0.80 sec.), seconds elapsed from begining of segment = 26.36, current segment base = 2635
+STAT: ### speech analysis (waveform -> MFCC)
+### Recognition: 1st pass (LR beam)
+pass1_best: <s> strange and
+pass1_best_wordseq: <s> strange and
+pass1_best_phonemeseq: sil | s t r ey n jh | ae n d
+pass1_best_score: 57.556190
+### Recognition: 2nd pass (RL heuristic best-first)
+STAT: 00 _default: 18814 generated, 4601 pushed, 545 nodes popped in 68
+ALIGN: === word alignment begin ===
+sentence1: <s> strange then </s>
+wseq1: <s> strange then </s>
+phseq1: sil | s t r ey n jh | dh eh n | sil
+cmscore1: 1.000 0.956 0.010 1.000
+score1: -17.316616
+=== begin forced alignment ===
+-- word alignment --
+ id: from      to     confidence        unit
+ ----------------------------------------
+[    2635     2635]  1.000000  <s>	[<s>]
+[    2636     2680]  0.955985  strange	[strange]
+[    2681     2699]  0.010316  then	[then]
+[    2700     2701]  1.000000  </s>	[</s>]
+current base = 2635re-computed AM score: 118.733406
+=== end forced alignment ===
+
+Warning: strip: sample 818-836 has zero value, stripped
+STAT: 33800 samples (2.11 sec.)
+STAT: 33800 samples (2.11 sec.), seconds elapsed from begining of segment = 30.61, current segment base = 3060
+STAT: ### speech analysis (waveform -> MFCC)
+### Recognition: 1st pass (LR beam)
+pass1_best: <s> the sheep had taught him that
+pass1_best_wordseq: <s> the sheep had taught him that
+pass1_best_phonemeseq: sil | dh ah | sh iy p | hh ae d | t ao t | hh ih m | dh ae t
+pass1_best_score: 213.863403
+### Recognition: 2nd pass (RL heuristic best-first)
+STAT: 00 _default: 17255 generated, 4089 pushed, 309 nodes popped in 199
+ALIGN: === word alignment begin ===
+sentence1: <s> the sheep had taught him that </s>
+wseq1: <s> the sheep had taught him that </s>
+phseq1: sil | dh ah | sh iy p | hh ae d | t ao t | hh ih m | dh ae t | sil
+cmscore1: 0.875 0.662 0.952 0.789 0.705 0.308 0.722 1.000
+score1: 196.731140
+=== begin forced alignment ===
+-- word alignment --
+ id: from      to     confidence        unit
+ ----------------------------------------
+[    3060     3060]  0.874769  <s>	[<s>]
+[    3061     3069]  0.661912  the	[the]
+[    3070     3128]  0.952390  sheep	[sheep]
+[    3129     3147]  0.788517  had	[had]
+[    3148     3169]  0.704842  taught	[taught]
+[    3170     3185]  0.308048  him	[him]
+[    3186     3219]  0.722192  that	[that]
+[    3220     3246]  1.000000  </s>	[</s>]
+current base = 3060re-computed AM score: 441.291077
+=== end forced alignment ===
+
+STAT: 158800 samples (9.93 sec.)
+STAT: 158800 samples (9.93 sec.), seconds elapsed from begining of segment = 33.11, current segment base = 3310
+STAT: ### speech analysis (waveform -> MFCC)
+### Recognition: 1st pass (LR beam)
+pass1_best: <s> this was strangest false things that ever came to earth from outer space it was glaringly heart medical misguided nor breath of wind
+pass1_best_wordseq: <s> this was strangest false things that ever came to earth from outer space it was glaringly heart medical misguided nor breath of wind
+pass1_best_phonemeseq: sil | dh ih s | w aa z | s t r ey n jh ih s t | f ao l s | th ih ng z | dh ae t | eh v ah r | k ey m | t ah | er th | f er m | aw t ax | s p ey s | ih t | w aa z | g l ea r ih ng l iy | hh aa t | m eh d ah k ah l | m ih s g ay d ih d | n ao | b r eh th | ah v | w ay n d
+pass1_best_score: 1109.283203
+### Recognition: 2nd pass (RL heuristic best-first)
+STAT: 00 _default: 172669 generated, 19085 pushed, 1679 nodes popped in 981
+ALIGN: === word alignment begin ===
+sentence1: <s> this was the strangest of all things that ever came to earth from outer space it was glaringly heart medical misguided nor a breath of wind </s>
+wseq1: <s> this was the strangest of all things that ever came to earth from outer space it was glaringly heart medical misguided nor a breath of wind </s>
+phseq1: sil | dh ih s | w aa z | dh ah | s t r ey n jh ih s t | aa v | ao l | th ih ng z | dh ae t | eh v ah r | k ey m | t ah | er th | f er m | aw t ax | s p ey s | ih t | w aa z | g l ea r ih ng l iy | hh aa t | m eh d ah k ah l | m ih s g ay d ih d | n ao | ax | b r eh th | ah v | w ay n d | sil
+cmscore1: 0.896 0.977 0.819 0.505 0.997 0.379 0.097 0.994 0.767 0.607 0.991 0.380 0.997 0.906 0.538 0.068 0.995 0.599 0.354 0.196 0.105 0.698 0.617 0.358 0.992 0.305 0.761 1.000
+score1: 1220.047241
+=== begin forced alignment ===
+-- word alignment --
+ id: from      to     confidence        unit
+ ----------------------------------------
+[    3310     3310]  0.896489  <s>	[<s>]
+[    3311     3359]  0.977281  this	[this]
+[    3360     3385]  0.819125  was	[was]
+[    3386     3394]  0.505073  the	[the]
+[    3395     3469]  0.996958  strangest	[strangest]
+[    3470     3486]  0.379050  of	[of]
+[    3487     3510]  0.096530  all	[all]
+[    3511     3577]  0.993800  things	[things]
+[    3578     3598]  0.766742  that	[that]
+[    3599     3629]  0.606724  ever	[ever]
+[    3630     3677]  0.990673  came	[came]
+[    3678     3691]  0.379855  to	[to]
+[    3692     3747]  0.996991  earth	[earth]
+[    3748     3773]  0.906452  from	[from]
+[    3774     3813]  0.537691  outer	[outer]
+[    3814     3900]  0.067765  space	[space]
+[    3901     3917]  0.994525  it	[it]
+[    3918     3932]  0.598913  was	[was]
+[    3933     3990]  0.353612  glaringly	[glaringly]
+[    3991     4035]  0.195593  heart	[heart]
+[    4036     4083]  0.105021  medical	[medical]
+[    4084     4148]  0.698325  misguided	[misguided]
+[    4149     4177]  0.616508  nor	[nor]
+[    4178     4182]  0.357800  a	[a]
+[    4183     4207]  0.991720  breath	[breath]
+[    4208     4222]  0.305316  of	[of]
+[    4223     4269]  0.761481  wind	[wind]
+[    4270     4282]  1.000000  </s>	[</s>]
+current base = 3310re-computed AM score: 2172.613037
+=== end forced alignment ===
+
+STAT: 68800 samples (4.30 sec.)
+STAT: 68800 samples (4.30 sec.), seconds elapsed from begining of segment = 43.73, current segment base = 4373
+STAT: ### speech analysis (waveform -> MFCC)
+### Recognition: 1st pass (LR beam)
+pass1_best: <s> you some went to serve at distant place in became centurion </s>
+pass1_best_wordseq: <s> you some went to serve at distant place in became centurion </s>
+pass1_best_phonemeseq: sil | y ax | s ah m | w eh n t | t ah | s er v | ae t | d ih s t ah n t | p l ey s | ih n | b ih k ey m | s eh n t uh r iy ah n | sil
+pass1_best_score: 423.904785
+### Recognition: 2nd pass (RL heuristic best-first)
+STAT: 00 _default: 45106 generated, 7230 pushed, 425 nodes popped in 418
+ALIGN: === word alignment begin ===
+sentence1: <s> your son went to serve as a distant place and became centurion </s>
+wseq1: <s> your son went to serve as a distant place and became centurion </s>
+phseq1: sil | y ao | s ah n | w eh n t | t ah | s er v | eh z | ah | d ih s t ah n t | p l ey s | ae n d | b ih k ey m | s eh n t uh r iy ah n | sil
+cmscore1: 0.759 0.431 0.322 0.705 0.530 0.539 0.059 0.241 0.789 0.349 0.236 0.808 0.939 1.000
+score1: 425.905853
+=== begin forced alignment ===
+-- word alignment --
+ id: from      to     confidence        unit
+ ----------------------------------------
+[    4373     4373]  0.758852  <s>	[<s>]
+[    4374     4387]  0.431240  your	[your]
+[    4388     4424]  0.322112  son	[son]
+[    4425     4447]  0.705054  went	[went]
+[    4448     4456]  0.530076  to	[to]
+[    4457     4494]  0.538811  serve	[serve]
+[    4495     4512]  0.059266  as	[as]
+[    4513     4518]  0.241291  a	[a]
+[    4519     4568]  0.788747  distant	[distant]
+[    4569     4615]  0.349088  place	[place]
+[    4616     4630]  0.236390  and	[and]
+[    4631     4665]  0.808382  became	[became]
+[    4666     4746]  0.939075  centurion	[centurion]
+[    4747     4776]  1.000000  </s>	[</s>]
+current base = 4373re-computed AM score: 922.250916
+=== end forced alignment ===
+
+STAT: 59800 samples (3.74 sec.)
+STAT: 59800 samples (3.74 sec.), seconds elapsed from begining of segment = 48.36, current segment base = 4835
+STAT: ### speech analysis (waveform -> MFCC)
+### Recognition: 1st pass (LR beam)
+pass1_best: <s> they made by continued ticking but he found nothing
+pass1_best_wordseq: <s> they made by continued ticking but he found nothing
+pass1_best_phonemeseq: sil | dh ey | m ey d | b ay | k ah n t ih n y uw d | t ih k ih ng | b ah t | hh iy | f aw n d | n ah th ih ng
+pass1_best_score: 507.279022
+### Recognition: 2nd pass (RL heuristic best-first)
+STAT: 00 _default: 132548 generated, 7507 pushed, 1521 nodes popped in 362
+ALIGN: === word alignment begin ===
+sentence1: <s> they made by continued ticking but found nothing </s>
+wseq1: <s> they made by continued ticking but found nothing </s>
+phseq1: sil | dh ey | m ey d | b ay | k ah n t ih n y uw d | t ih k ih ng | b ah t | f aw n d | n ah th ih ng | sil
+cmscore1: 0.921 0.314 0.570 0.384 0.583 0.230 0.847 0.981 0.914 1.000
+score1: 457.611694
+=== begin forced alignment ===
+-- word alignment --
+ id: from      to     confidence        unit
+ ----------------------------------------
+[    4835     4835]  0.921247  <s>	[<s>]
+[    4836     4852]  0.314387  they	[they]
+[    4853     4885]  0.569980  made	[made]
+[    4886     4915]  0.383840  by	[by]
+[    4916     4974]  0.583460  continued	[continued]
+[    4975     5050]  0.229669  ticking	[ticking]
+[    5051     5070]  0.846585  but	[but]
+[    5071     5122]  0.980735  found	[found]
+[    5123     5183]  0.914281  nothing	[nothing]
+[    5184     5185]  1.000000  </s>	[</s>]
+current base = 4835re-computed AM score: 821.950256
+=== end forced alignment ===
+
+STAT: 82800 samples (5.18 sec.)
+STAT: 82800 samples (5.18 sec.), seconds elapsed from begining of segment = 52.86, current segment base = 5285
+STAT: ### speech analysis (waveform -> MFCC)
+### Recognition: 1st pass (LR beam)
+pass1_best: <s> one imagine these two covered sand running up little street in the bright sunlight </s>
+pass1_best_wordseq: <s> one imagine these two covered sand running up little street in the bright sunlight </s>
+pass1_best_phonemeseq: sil | hh w ah n | ih m ae jh ah n | dh iy z | t uw | k ah v ah d | s ae n d | r ah n ih ng | ah p | l ih t ah l | s t r iy t | ih n | dh ah | b r ay t | s ah n l ay t | sil
+pass1_best_score: 690.596680
+### Recognition: 2nd pass (RL heuristic best-first)
+STAT: 00 _default: 22064 generated, 6232 pushed, 378 nodes popped in 506
+ALIGN: === word alignment begin ===
+sentence1: <s> one can imagine these two covered sand running up little street in bright sunlight </s>
+wseq1: <s> one can imagine these two covered sand running up little street in bright sunlight </s>
+phseq1: sil | hh w ah n | k ae n | ih m ae jh ah n | dh iy z | t uw | k ah v ah d | s ae n d | r ah n ih ng | ah p | l ih t ah l | s t r iy t | ih n | b r ay t | s ah n l ay t | sil
+cmscore1: 0.837 0.842 0.538 0.609 0.776 0.352 0.643 0.348 0.993 0.275 0.934 0.844 0.518 0.995 0.732 1.000
+score1: 737.532898
+=== begin forced alignment ===
+-- word alignment --
+ id: from      to     confidence        unit
+ ----------------------------------------
+[    5285     5285]  0.836814  <s>	[<s>]
+[    5286     5316]  0.842439  one	[one]
+[    5317     5327]  0.538335  can	[can]
+[    5328     5371]  0.608757  imagine	[imagine]
+[    5372     5396]  0.776426  these	[these]
+[    5397     5436]  0.351705  two	[two]
+[    5437     5479]  0.643486  covered	[covered]
+[    5480     5532]  0.348029  sand	[sand]
+[    5533     5559]  0.992746  running	[running]
+[    5560     5577]  0.275229  up	[up]
+[    5578     5601]  0.934302  little	[little]
+[    5602     5644]  0.843952  street	[street]
+[    5645     5656]  0.517616  in	[in]
+[    5657     5693]  0.995112  bright	[bright]
+[    5694     5759]  0.732006  sunlight	[sunlight]
+[    5760     5779]  1.000000  </s>	[</s>]
+current base = 5285re-computed AM score: 1331.052368
+=== end forced alignment ===
+
+STAT: 19299 samples (1.21 sec.)
+STAT: 19299 samples (1.21 sec.), seconds elapsed from begining of segment = 58.79, current segment base = 5879
+STAT: ### speech analysis (waveform -> MFCC)
+### Recognition: 1st pass (LR beam)
+pass1_best: <s> the shower
+pass1_best_wordseq: <s> the shower
+pass1_best_phonemeseq: sil | dh iy | sh aw ax r
+pass1_best_score: 130.578781
+### Recognition: 2nd pass (RL heuristic best-first)
+STAT: 00 _default: 21497 generated, 4114 pushed, 332 nodes popped in 109
+ALIGN: === word alignment begin ===
+sentence1: <s> the shower </s>
+wseq1: <s> the shower </s>
+phseq1: sil | dh iy | sh aw ax r | sil
+cmscore1: 0.552 0.698 0.453 1.000
+score1: 88.964088
+=== begin forced alignment ===
+-- word alignment --
+ id: from      to     confidence        unit
+ ----------------------------------------
+[    5879     5879]  0.552376  <s>	[<s>]
+[    5880     5898]  0.697973  the	[the]
+[    5899     5974]  0.452506  shower	[shower]
+[    5975     5976]  1.000000  </s>	[</s>]
+current base = 5879re-computed AM score: 207.983749
+=== end forced alignment ===
+
+
+------
+### read waveform input
