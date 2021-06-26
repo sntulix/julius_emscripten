@@ -69,7 +69,7 @@ autom4te.cache
 x64/
 x86/
 bld/
-[Bb]in/
+#[Bb]in/
 [Oo]bj/
 [Ll]og/
 
@@ -135,3 +135,25 @@ ipch/
 *.vsp
 *.vspx
 *.sap
+
+# others
+*.zip
+
+#julius relative files
+*.am
+*.dct
+*.npy
+*.lm
+*.mfc
+*.norm
+*.phn
+*.prior
+*.wav
+
+english_recoginition-with-ffmpeg/bin/index.js
+english_recoginition-with-ffmpeg/bin/index.wasm
+english_recoginition-with-ffmpeg/bin/index.data
+
+*.swp
+.DS_Store
+._.DS_Store
