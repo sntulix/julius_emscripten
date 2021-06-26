@@ -9,6 +9,10 @@ Read https://github.com/julius-speech/julius please.
 git clone https://github.com/julius-speech/julius.git
 cd julius
 
+# for English Recoginization, branch english_recoginition-with-ffmpeg
+# for Japanese Recoginization, branch japanese_recoginition-with-ffmpeg
+# then, build test/<language>
+
 # add supoort host
 # update the files that The GNU config.guess and config.sub scripts. 
 # https://git.savannah.gnu.org/cgit/config.git/tree/
